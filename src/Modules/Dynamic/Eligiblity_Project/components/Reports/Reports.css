@@ -1,0 +1,13 @@
+.navbar-container {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 999;
+}
+
+.page {
+  padding-top: 60px; /* Adjust this value to match the height of your navbar */
+}
+#Report-Header {
+  background: linear-gradient(0.25turn, #3f87a6, #ebf8e1, #f69d3c);
+}

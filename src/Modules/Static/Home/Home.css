@@ -1,0 +1,17 @@
+#homepage {
+  height: 100vh; /* Using viewport height */
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+}
+
+#text-page {
+  text-align: center;
+}
+
+#Home-Page {
+  background-image: url(../../../assets/Images/HOME-NEW3.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* radial-gradient(circle, #3798d2, #ffc46b, #cf4f7c, #6927eb); */
+}

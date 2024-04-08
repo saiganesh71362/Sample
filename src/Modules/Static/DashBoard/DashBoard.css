@@ -1,0 +1,15 @@
+#homepage {
+  height: 100vh; /* Using viewport height */
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+}
+
+#text-page {
+  text-align: center;
+}
+#body-home {
+  background-image: url(../../../assets/Images/HOME-NEW2.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}

@@ -1,0 +1,23 @@
+#Card-Body {
+  background: linear-gradient(
+    55deg,
+    blue,
+    pink,
+    #feb47b,
+    #ffeda1,
+    #a6f8db,
+    blue
+  );
+  /* You can adjust the angle and colors as per your preference */
+}
+#Card-Header {
+  background: linear-gradient(
+    55deg,
+    blue,
+    pink,
+    #feb47b,
+    #ffeda1,
+    #a6f8db,
+    blue
+  );
+}
