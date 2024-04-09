@@ -1,59 +1,52 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import NavbarMain from "../../../../Utils/NavbarMain/NavbarMain";
 import { UserManagementService } from "../../Services/UserManagmentService";
 import { useNavigate, useParams } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
+interface IState {
+  error: string;
+}
 
 const DeleteAccount: React.FC = () => {
-  const notify = () =>
-    toast.success("Plan deleted successfully!", {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-      // toastClassName: "bounce",
-    });
-
+  const [state, setState] = useState<IState>({
+    error: "",
+  });
   const { userId } = useParams();
-  const id = Number(userId);
-
+  const cid = Number(userId);
   const navigate = useNavigate();
+
   useEffect(() => {
-    UserManagementService.deleteUserById(id)
+    // Update state to indicate loading
+    setState(() => ({
+      ...state,
+    }));
+
+    // Call the service to delete user
+    UserManagementService.deleteUserById(cid)
       .then((response) => {
+        console.log("Response from deleteUserById:", response);
         if (response.data) {
+          // Update state to indicate loading has finished
+          setState(() => ({
+            ...state,
+          }));
+          // Redirect to viewAccounts page
           navigate("/viewAccounts");
-          notify();
         }
       })
       .catch((error) => {
-        console.log(error);
+        console.error("Error in deleteUserById:", error);
+        // Update state with error message and indicate loading has finished
+        setState(() => ({
+          ...state,
+          error: error.message,
+        }));
       });
-  }); // Empty dependency array
-
+  }, []);
   return (
     <>
-      <NavbarMain></NavbarMain>
-      <pre>{JSON.stringify(id)}</pre>
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-        toastClassName="bounce"
-      />
-      
+      <NavbarMain />
+      <pre>{JSON.stringify(cid)}</pre>
     </>
   );
 };
