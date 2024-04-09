@@ -29,6 +29,7 @@ const ViewAccounts: React.FC = () => {
   return (
     <>
       <NavbarMain />
+      {/* <pre>{JSON.stringify(accountData)}</pre> */}
       <div
         className="container mt-5"
         style={{ maxHeight: "70vh", overflowY: "auto" }}
@@ -65,9 +66,9 @@ const ViewAccounts: React.FC = () => {
                     <td>{data.userId}</td>
                     <td>{data.fullName}</td>
                     <td>{data.email}</td>
-                    <td>{data.mobile}</td>
+                    <td>{data.mobileNumber}</td>
                     <td>{data.ssn}</td>
-                    <td>{data.date}</td>
+                    <td>{data.dateOfBirth}</td>
                     <td>{data.gender}</td>
                     <td>
                       <Link
@@ -86,28 +87,26 @@ const ViewAccounts: React.FC = () => {
                       </Link>
                     </td>
                     <td>
-                      {data.accStatus == null && (
+                      {data.accountStatus == null && (
                         <Link
-                          to={`/active-plan/${data.userId}/${data.accStatus}`}
+                          to={`/activeSwitch/${data.userId}/${data.accountStatus}`}
                           className="btn btn-secondary"
                         >
-                          <i className="bi bi-circle">
-                            {/* <pre>{JSON.stringify(plan.activeSwitch)}</pre> */}
-                          </i>
+                          <i className="bi bi-circle"></i>
                         </Link>
                       )}
 
-                      {data.accStatus == "Y" && (
+                      {data.accountStatus == "Active" && (
                         <Link
-                          to={`/active-plan/${data.userId}/${data.accStatus}`}
+                          to={`/activeSwitch/${data.userId}/${data.accountStatus}`}
                           className="btn btn-danger"
                         >
                           <i className="bi bi-check-circle"></i>
                         </Link>
                       )}
-                      {data.accStatus == "N" && (
+                      {data.accountStatus == "In-Active" && (
                         <Link
-                          to={`/active-plan/${data.userId}/${data.accStatus}`}
+                          to={`/activeSwitch/${data.userId}/${data.accountStatus}`}
                           className="btn btn-success"
                         >
                           <i className="bi bi-x-circle-fill"></i>

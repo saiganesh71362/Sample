@@ -34,6 +34,7 @@ const App: React.FC = () => {
         <Route path="/active-plan/:planId/:status?" element={<ActivePlan />} />
         {/* --------------Reports Module-2 -----------------*/}
         <Route path="/reports" element={<Reports />} />
+        {/* -----------------mini-3-------------------- */}
         <Route path="/login" element={<Login />}></Route>
         <Route
           path="/forgotPassword"
@@ -49,7 +50,10 @@ const App: React.FC = () => {
           path="/deleteAccount/:userId"
           element={<DeleteAccount />}
         ></Route>
-        <Route path="/activeSwitch" element={<ActiveSwitch />}></Route>
+        <Route
+          path="/activeSwitch/:userId/:currentStatus"
+          element={<ActiveSwitch />}
+        ></Route>
       </Routes>
     </BrowserRouter>
   );
