@@ -20,7 +20,7 @@ export class UserManagementService {
   }
   //   http://localhost:8084/userManagement/users/1
   public static deleteUserById(userId: number): Promise<{ data: boolean }> {
-    return axios.get(`${this.URL}/users/${userId}`);
+    return axios.delete(`${this.URL}/users/${userId}`);
   }
   //   http://localhost:8084/userManagement/addUser
   public static addUser(userObject: IUser): Promise<{ data: boolean }> {

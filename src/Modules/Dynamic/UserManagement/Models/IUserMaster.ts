@@ -5,17 +5,17 @@ export interface IUserMaster {
 
   email: string;
 
-  mobile: number;
+  mobileNumber: number;
 
   gender: string;
 
-  date?: string;
+  dateOfBirth?: string;
 
   ssn: number;
 
   password?: string;
 
-  accStatus: string;
+  accountStatus: string;
 
   createdDate?: string;
 
