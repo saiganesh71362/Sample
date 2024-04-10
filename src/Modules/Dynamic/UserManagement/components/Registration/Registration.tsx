@@ -4,24 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 import { IUser } from "../../Models/IUsers";
 import { UserManagementService } from "../../Services/UserManagmentService";
 import "./Registration.css";
+import { toast } from "react-toastify";
 // top up
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 const Registration: React.FC = () => {
-  // topup
-  const notify = () =>
-    toast.warning("Register Account SuccessFully", {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
-
   const [user, setUser] = useState<IUser>({
     fullName: "",
     email: "",
@@ -48,6 +34,7 @@ const Registration: React.FC = () => {
     UserManagementService.addUser(user)
       .then((response) => {
         if (response && response.data) {
+          toast.success("User Added Successfully");
           navigate("/active");
         }
       })
@@ -57,19 +44,6 @@ const Registration: React.FC = () => {
     <>
       <NavbarMain></NavbarMain>
       {/* <pre>{JSON.stringify(user)}</pre> */}
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-        toastClassName="bounce"
-      />
 
       <div className="container">
         {/* header row-1 */}
@@ -194,7 +168,6 @@ const Registration: React.FC = () => {
                         <button
                           type="submit"
                           className="btn btn-danger text-center fw-bold"
-                          onClick={notify}
                         >
                           Submit
                         </button>

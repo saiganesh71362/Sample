@@ -4,27 +4,13 @@ import { PlasnServices } from "../../Services/Service";
 import { IPlans } from "../../Models/IPlans";
 import { useNavigate } from "react-router-dom";
 import NavbarMain from "../../../../Utils/NavbarMain/NavbarMain";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 interface IState {
   categoryData: IPlanCategory[];
   errorMsg: string;
 }
 const CreatePlan: React.FC = () => {
-  // topup
-  const notify = () =>
-    toast.success("Create Plan SuccessFully", {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
-
   const [state, setState] = React.useState<IState>({
     categoryData: [] as IPlanCategory[],
     errorMsg: "",
@@ -67,6 +53,8 @@ const CreatePlan: React.FC = () => {
     PlasnServices.createNewPlan(plan)
       .then((response) => {
         if (response.data) {
+          toast.success("Plan Created Successfully");
+
           navigate("/view-plans");
         }
       })
@@ -77,19 +65,6 @@ const CreatePlan: React.FC = () => {
   return (
     <>
       <NavbarMain></NavbarMain>
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-        toastClassName="bounce"
-      />
 
       <div className="container mt-5">
         <div className="row mt-5">
@@ -198,7 +173,6 @@ const CreatePlan: React.FC = () => {
                       type="submit"
                       value="Submit"
                       className="btn btn-primary mt-4 fw-bold"
-                      onClick={notify}
                     />
                   </div>
                 </form>

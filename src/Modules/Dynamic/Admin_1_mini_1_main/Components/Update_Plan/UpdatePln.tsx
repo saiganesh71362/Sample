@@ -76,6 +76,7 @@ const UpdatePln: React.FC = () => {
     PlasnServices.updatePlan(id, plan)
       .then((response) => {
         if (response.data) {
+          notify();
           navigate("/view-plans"); // Corrected navigation path
         }
       })

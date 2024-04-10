@@ -3,23 +3,9 @@ import NavbarMain from "../../../../Utils/NavbarMain/NavbarMain";
 import { Link, useNavigate } from "react-router-dom";
 import { IActiveAccounts } from "../../Models/IActiveAccount";
 import { UserManagementService } from "../../Services/UserManagmentService";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 const Active: React.FC = () => {
-  //topup
-  const notify = () =>
-    toast.info("Create Account SuccessFully", {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
-
   const [user, setUser] = useState<IActiveAccounts>({
     email: "",
     newPassword: "",
@@ -50,6 +36,7 @@ const Active: React.FC = () => {
       // Call the service to activate the account
       await UserManagementService.activateAccount(user);
       // If successful, navigate to login page
+      toast.success("Account Activated Successfully");
       navigate("/login");
     } catch (error) {
       alert("Error Occurred" + error);
@@ -60,20 +47,6 @@ const Active: React.FC = () => {
     <>
       <NavbarMain></NavbarMain>
       <pre>{JSON.stringify(user)}</pre>
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-        toastClassName="bounce"
-      />
-
       <div className="container">
         {/* header row-1 */}
         <div className="row mt-5">
@@ -154,7 +127,6 @@ const Active: React.FC = () => {
                         <button
                           type="submit"
                           className="btn btn-primary text-center fw-bold"
-                          onClick={notify}
                         >
                           Activate
                         </button>

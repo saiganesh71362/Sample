@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import NavbarMain from "../../../../Utils/NavbarMain/NavbarMain";
 import { UserManagementService } from "../../Services/UserManagmentService";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 interface IState {
   error: string;
@@ -31,6 +32,7 @@ const DeleteAccount: React.FC = () => {
             ...state,
           }));
           // Redirect to viewAccounts page
+          toast.error("Your Account Delete Success Fully");
           navigate("/viewAccounts");
         }
       })

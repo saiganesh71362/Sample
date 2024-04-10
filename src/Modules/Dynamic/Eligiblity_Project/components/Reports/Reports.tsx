@@ -4,8 +4,7 @@ import { ISearchRequest } from "../../Models/SearchRequest";
 import { ISearchResponse } from "../../Models/SearchResponse";
 import "./Reports.css";
 import NavbarMain from "../../../../Utils/NavbarMain/NavbarMain";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 interface IState {
   planNamesData: string[];
@@ -14,41 +13,6 @@ interface IState {
   plansData: ISearchResponse[];
 }
 const Reports: React.FC = () => {
-  // topup
-  const notify = () =>
-    toast.info("Show Reports", {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
-  const notify1 = () =>
-    toast.success("Download Pdf", {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
-  const notify2 = () =>
-    toast.success("Download Excel", {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
-
   const [state, setState] = useState<IState>({
     planNamesData: [],
     planStatusData: [],
@@ -91,6 +55,9 @@ const Reports: React.FC = () => {
     EligibilityService.searchRecord(plan)
       .then((response) => {
         setState({ ...state, plansData: response.data });
+        response.data.length > 0
+          ? toast.success(`there are  ${response.data.length} records`)
+          : toast.warning("there are no records");
       })
       .catch((error) => {
         setState({ ...state, errorMsg: `Error! ${error}` });
@@ -100,6 +67,8 @@ const Reports: React.FC = () => {
   const downloadPdf = () => {
     fetch("http://localhost:8083/eligibility/pdf")
       .then((response) => {
+        setState({ ...state });
+        toast.success("Download Pdf SuccessFully");
         return response.blob(); // Return the blob promise
       })
       .then((blob) => {
@@ -120,6 +89,8 @@ const Reports: React.FC = () => {
   const downloadExcel = () => {
     fetch("http://localhost:8083/eligibility/excel")
       .then((response) => {
+        setState({ ...state });
+        toast.success("Download Excel SuccessFully");
         return response.blob(); // Return the blob promise
       })
       .then((blob) => {
@@ -142,19 +113,6 @@ const Reports: React.FC = () => {
       <nav className="navbar-container">
         <NavbarMain></NavbarMain>
       </nav>
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-        toastClassName="bounce"
-      />
 
       <div className="page">
         {/* <pre>{JSON.stringify(state.planNamesData)}</pre>
@@ -270,7 +228,6 @@ const Reports: React.FC = () => {
                         type="submit"
                         value={"Search"}
                         className="btn btn-danger text text-white mt-4 ms-4 fw-bold"
-                        onClick={notify}
                       />
                     </div>
                   </div>
@@ -312,7 +269,6 @@ const Reports: React.FC = () => {
               <button
                 onClick={() => {
                   downloadPdf();
-                  notify1();
                 }}
                 className="btn btn-primary fw-bold me-5"
               >
@@ -321,7 +277,6 @@ const Reports: React.FC = () => {
               <button
                 onClick={() => {
                   downloadExcel();
-                  notify2();
                 }}
                 className="btn btn-primary fw-bold"
               >

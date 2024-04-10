@@ -2,26 +2,13 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import NavbarMain from "../../../../Utils/NavbarMain/NavbarMain";
 import { UserManagementService } from "../../Services/UserManagmentService";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 interface IState {
   email: string;
   error: string;
 }
 const ForgotPassword: React.FC = () => {
-  const notify = () =>
-    toast.info("Update Account SuccessFully", {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
-
   const [state, setState] = useState<IState>({ email: "", error: "" });
 
   const updateInput = (
@@ -38,6 +25,7 @@ const ForgotPassword: React.FC = () => {
     UserManagementService.forgotPwd(state.email)
       .then((response) => {
         if (response && response.data) {
+          toast.success("Password Reset Link Sent Successfully");
           navigate("/login");
         }
       })
@@ -48,19 +36,6 @@ const ForgotPassword: React.FC = () => {
     <>
       <NavbarMain></NavbarMain>
       {/* <pre>{JSON.stringify(state)}</pre> */}
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-        toastClassName="bounce"
-      />
 
       <div className="bg ">
         <div className="container">
@@ -91,7 +66,6 @@ const ForgotPassword: React.FC = () => {
                     <button
                       type="submit"
                       className="btn btn-primary btn-block text-center fw-bold"
-                      onClick={notify}
                     >
                       Recover Password
                     </button>

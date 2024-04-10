@@ -4,23 +4,11 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
 import { ILogin } from "../../Dynamic/UserManagement/Models/ILogin";
 import { UserManagementService } from "../../Dynamic/UserManagement/Services/UserManagmentService";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 const Login: React.FC = () => {
   const [user, setUser] = useState<ILogin>({ email: "", password: "" });
 
-  const notify = () =>
-    toast.success("Login SuccessFully", {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
   const updateInput = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -35,7 +23,7 @@ const Login: React.FC = () => {
     UserManagementService.UserLogin(user)
       .then((response) => {
         if (response && response.data) {
-          notify(); // Call notify function to show the toast
+          toast.success("User Login SuccessFully");
           navigate("/viewAccounts");
         }
       })
@@ -48,20 +36,6 @@ const Login: React.FC = () => {
   return (
     <>
       <NavbarMain />
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-        toastClassName="bounce"
-      />
-
       <div className="" id="Login-Page">
         <div className="container">
           <div className="d-flex justify-content-center align-items-center vh-100">
@@ -103,7 +77,6 @@ const Login: React.FC = () => {
                     <button
                       type="submit"
                       className="btn btn-danger btn-block text-center fw-bold"
-                      onClick={notify}
                     >
                       LogIn
                     </button>

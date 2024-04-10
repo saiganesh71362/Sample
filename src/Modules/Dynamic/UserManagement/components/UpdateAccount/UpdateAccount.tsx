@@ -4,27 +4,13 @@ import NavbarMain from "../../../../Utils/NavbarMain/NavbarMain";
 import "./UpdateAccount.css";
 import { UserManagementService } from "../../Services/UserManagmentService";
 import { IUser } from "../../Models/IUsers";
+import { toast } from "react-toastify";
 // topup
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 const UpdateAccount: React.FC = () => {
   const { userId } = useParams();
   const id = Number(userId);
   const navigate = useNavigate();
-
-  // topup
-  const notify = () =>
-    toast.info("Update Account SuccessFully", {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "colored",
-    });
 
   const [user, setUser] = useState<IUser>({
     email: "",
@@ -62,6 +48,7 @@ const UpdateAccount: React.FC = () => {
     UserManagementService.updateUser(id, user) // Pass userId and user data to updateUser function
       .then((response) => {
         if (response.data) {
+          toast.success("Account Updated Successfully");
           navigate("/viewAccounts"); // Corrected navigation path
         }
       })
@@ -73,19 +60,6 @@ const UpdateAccount: React.FC = () => {
   return (
     <>
       <NavbarMain></NavbarMain>
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-        toastClassName="bounce"
-      />
 
       <pre>{JSON.stringify(user)}</pre>
 
@@ -208,7 +182,6 @@ const UpdateAccount: React.FC = () => {
                           type="submit"
                           value={`Update`}
                           className="btn btn-primary m-2 fw-bold"
-                          onClick={notify}
                         ></input>
                         <Link
                           className="btn btn-success m-2 fw-bold"
