@@ -54,6 +54,13 @@ const DashBoard: React.FC = () => {
                 <i className="bi bi-box-arrow-in-right"></i>
               </button>
             </Link>
+            <hr />
+            <Link to="/createApplication">
+              <button className="btn btn-warning fw-bold">
+                CreateApplication
+                <i className="bi bi-box-arrow-in-right"></i>
+              </button>
+            </Link>
           </div>
         </div>
       </div>

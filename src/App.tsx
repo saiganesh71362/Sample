@@ -20,6 +20,10 @@ import DeleteAccount from "./Modules/Dynamic/UserManagement/components/DeleteAcc
 import ActiveSwitch from "./Modules/Dynamic/UserManagement/components/ActiveSwitch/ActiveSwitch";
 import UpdateAccount from "./Modules/Dynamic/UserManagement/components/UpdateAccount/UpdateAccount";
 import { ToastContainer } from "react-toastify";
+import CreateApplication from "./Modules/Dynamic/ApplicationRegistration/components/CreateApplication/CreateApplication";
+import ViewApplication from "./Modules/Dynamic/ApplicationRegistration/components/ViewApplication/ViewApplication";
+import UpdateApplication from "./Modules/Dynamic/ApplicationRegistration/components/UpdateApplication/UpdateApplication";
+import DeleteApplication from "./Modules/Dynamic/ApplicationRegistration/components/DeleteApplication/DeleteApplication";
 
 const App: React.FC = () => {
   return (
@@ -71,6 +75,23 @@ const App: React.FC = () => {
           <Route
             path="/activeSwitch/:userId/:currentStatus"
             element={<ActiveSwitch />}
+          ></Route>
+          {/* -----------------mini-ApReg-------------------- */}\
+          <Route
+            path="/createApplication"
+            element={<CreateApplication />}
+          ></Route>
+          <Route
+            path="/viewApplication"
+            element={<ViewApplication></ViewApplication>}
+          ></Route>
+          <Route
+            path="/updateApplication/:appId"
+            element={<UpdateApplication></UpdateApplication>}
+          ></Route>
+          <Route
+            path="/deleteApplication/:appId"
+            element={<DeleteApplication></DeleteApplication>}
           ></Route>
         </Routes>
       </BrowserRouter>
