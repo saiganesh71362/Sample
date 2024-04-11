@@ -1,55 +1,49 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import NavbarMain from "../../../../Utils/NavbarMain/NavbarMain";
-import "./UpdateAccount.css";
-import { UserManagementService } from "../../Services/UserManagmentService";
-import { IUser } from "../../Models/IUsers";
+import { ApplicationRegisterService } from "../../services/ApplicationRegisterService";
 import { toast } from "react-toastify";
-// topup
+import { IApplicationRegister } from "../../models/IApplicationRegister";
 
-const UpdateAccount: React.FC = () => {
-  const { userId } = useParams();
-  const id = Number(userId);
+const UpdateApplication: React.FC = () => {
+  const { appId } = useParams();
+  const id = Number(appId);
   const navigate = useNavigate();
 
-  const [user, setUser] = useState<IUser>({
-    email: "",
-    mobileNumber: 0,
-    gender: "",
-    dateOfBirth: "",
-    ssn: 0,
-    createdBy: "",
-    updatedBy: "",
+  const [applications, setApplication] = useState<IApplicationRegister>({
     fullName: "",
-    accStatus: "",
+    email: "",
+    phNo: 0,
+    gender: "",
+    ssn: 0,
+    dob: "",
+    appId: 0,
   });
-
   useEffect(() => {
-    // stored the data page reload time
-    UserManagementService.getUserById(id)
+    ApplicationRegisterService.getApplicationRegisterById(id)
       .then((response) => {
-        setUser(response.data);
+        // Assuming the response directly contains the application data
+        setApplication(response);
       })
       .catch((error) => {
         console.log(error);
       });
   }, [id]);
-
   const updateInput = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
+    setApplication({ ...applications, [e.target.name]: e.target.value });
   };
 
   const onSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    UserManagementService.updateUser(id, user) // Pass userId and user data to updateUser function
+    ApplicationRegisterService.updateCitizen(id, applications) // Pass userId and user data to updateUser function
       .then((response) => {
         if (response.data) {
-          toast.success("Account Updated Successfully");
-          navigate("/viewAccounts"); // Corrected navigation path
+          toast.success("Application Updated Successfully");
+          navigate("/ViewApplication"); // Corrected navigation path
         }
       })
       .catch((error) => {
@@ -61,19 +55,19 @@ const UpdateAccount: React.FC = () => {
     <>
       <div id="Body">
         <NavbarMain></NavbarMain>
-        <pre>{JSON.stringify(user)}</pre>
+        <pre>{JSON.stringify(applications)}</pre>
         <div className="container">
           {/* header row-1 */}
           <div className="row mt-5">
             <div className="col-sm-2"> </div>
             <div className="col-sm-8">
               <div className="card">
-                <div className="card-header " id="Update-Header">
+                <div className="card-header " id="CreateAp_Head">
                   <h1 className="text text-center text-white">
-                    Update Account
+                    Update Application
                   </h1>
                 </div>
-                <div className="card-body bg-danger-subtle" id="Update-Body">
+                <div className="card-body bg-danger-subtle" id="CreateAp_Head">
                   {/* ----------form start----------- */}
                   <form onSubmit={onSubmitForm}>
                     {/* --------------- form row-1 -------------*/}
@@ -87,7 +81,7 @@ const UpdateAccount: React.FC = () => {
                           type="text"
                           className="form-control"
                           name="fullName"
-                          value={user.fullName}
+                          value={applications.fullName}
                           onChange={updateInput}
                           required
                         />
@@ -99,7 +93,7 @@ const UpdateAccount: React.FC = () => {
                           type="email"
                           className="form-control"
                           name="email"
-                          value={user.email}
+                          value={applications.email}
                           onChange={updateInput}
                           required
                         />
@@ -114,7 +108,7 @@ const UpdateAccount: React.FC = () => {
                           type="text"
                           className="form-control"
                           name="mobileNumber"
-                          value={user.mobileNumber}
+                          value={applications.phNo}
                           onChange={updateInput}
                           required
                         />
@@ -126,7 +120,7 @@ const UpdateAccount: React.FC = () => {
                           type="text"
                           className="form-control"
                           name="ssn"
-                          value={user.ssn}
+                          value={applications.ssn}
                           onChange={updateInput}
                           required
                         />
@@ -141,7 +135,7 @@ const UpdateAccount: React.FC = () => {
                           type="date"
                           className="form-control"
                           name="dateOfBirth"
-                          value={user.dateOfBirth}
+                          value={applications.dob}
                           onChange={updateInput}
                           required
                         />
@@ -156,7 +150,7 @@ const UpdateAccount: React.FC = () => {
                               className="form-check-input"
                               name="gender"
                               value="Male"
-                              checked={user.gender === "Male"}
+                              checked={applications.gender === "Male"}
                               onChange={updateInput}
                               required
                             />{" "}
@@ -168,7 +162,7 @@ const UpdateAccount: React.FC = () => {
                               className="form-check-input"
                               name="gender"
                               value="Female"
-                              checked={user.gender === "Female"}
+                              checked={applications.gender === "Female"}
                               onChange={updateInput}
                               required
                             />{" "}
@@ -188,9 +182,9 @@ const UpdateAccount: React.FC = () => {
                           ></input>
                           <Link
                             className="btn btn-success m-2 fw-bold"
-                            to={"/viewAccounts"}
+                            to={"/viewApplication"}
                           >
-                            ViewAccounts
+                            ViewApplications
                           </Link>
                         </div>
                       </div>
@@ -206,4 +200,4 @@ const UpdateAccount: React.FC = () => {
   );
 };
 
-export default UpdateAccount;
+export default UpdateApplication;

@@ -3,8 +3,7 @@ import "./DeletePlan.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { PlasnServices } from "../../Services/Service";
 import NavbarMain from "../../../../Utils/NavbarMain/NavbarMain";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 
 const DeletePlan: React.FC = () => {
   const { planId } = useParams();
@@ -16,8 +15,8 @@ const DeletePlan: React.FC = () => {
     PlasnServices.deletePlan(id)
       .then((response) => {
         if (response.data) {
+          toast.error("Plan Deleted Successfully");
           navigate("/view-plans");
-          notify(); // Call notify function to show the toast
         }
       })
       .catch((error) => {
@@ -25,35 +24,10 @@ const DeletePlan: React.FC = () => {
       });
   }, [id, navigate]);
 
-  const notify = () =>
-    toast.success("Plan deleted successfully!", {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-      // toastClassName: "bounce",
-    });
-
   return (
     <>
       <NavbarMain></NavbarMain>
-      <ToastContainer
-        position="top-center"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="dark"
-        toastClassName="bounce"
-      />
+
       <h1>{JSON.stringify(id)}</h1>
     </>
   );

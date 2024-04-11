@@ -19,44 +19,83 @@ import ViewAccounts from "./Modules/Dynamic/UserManagement/components/ViewAccoun
 import DeleteAccount from "./Modules/Dynamic/UserManagement/components/DeleteAccount/DeleteAccount";
 import ActiveSwitch from "./Modules/Dynamic/UserManagement/components/ActiveSwitch/ActiveSwitch";
 import UpdateAccount from "./Modules/Dynamic/UserManagement/components/UpdateAccount/UpdateAccount";
+import { ToastContainer } from "react-toastify";
+import CreateApplication from "./Modules/Dynamic/ApplicationRegistration/components/CreateApplication/CreateApplication";
+import ViewApplication from "./Modules/Dynamic/ApplicationRegistration/components/ViewApplication/ViewApplication";
+import UpdateApplication from "./Modules/Dynamic/ApplicationRegistration/components/UpdateApplication/UpdateApplication";
+import DeleteApplication from "./Modules/Dynamic/ApplicationRegistration/components/DeleteApplication/DeleteApplication";
 
 const App: React.FC = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/register" element={<Registration />} />
-        <Route path="/dashboard" element={<DashBoard />}></Route>
-        <Route path="/create-plan" element={<CreatePlan />} />
-        <Route path="/view-plans" element={<ViewPlans />} />
-        <Route path="/update-plan/:planId" element={<UpdatePln />} />
-        <Route path="/delete-plan/:planId" element={<DeletePlan />} />
-        <Route path="/active-plan/:planId/:status?" element={<ActivePlan />} />
-        {/* --------------Reports Module-2 -----------------*/}
-        <Route path="/reports" element={<Reports />} />
-        {/* -----------------mini-3-------------------- */}
-        <Route path="/login" element={<Login />}></Route>
-        <Route
-          path="/forgotPassword"
-          element={<ForgotPassword></ForgotPassword>}
-        ></Route>
-        <Route path="/active" element={<Active />}></Route>
-        <Route path="/viewAccounts" element={<ViewAccounts />}></Route>
-        <Route
-          path="/updateAccount/:userId"
-          element={<UpdateAccount />}
-        ></Route>
-        <Route
-          path="/deleteAccount/:userId"
-          element={<DeleteAccount />}
-        ></Route>
-        <Route
-          path="/activeSwitch/:userId/:currentStatus"
-          element={<ActiveSwitch />}
-        ></Route>
-      </Routes>
-    </BrowserRouter>
+    <>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
+
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/register" element={<Registration />} />
+          <Route path="/dashboard" element={<DashBoard />}></Route>
+          <Route path="/create-plan" element={<CreatePlan />} />
+          <Route path="/view-plans" element={<ViewPlans />} />
+          <Route path="/update-plan/:planId" element={<UpdatePln />} />
+          <Route path="/delete-plan/:planId" element={<DeletePlan />} />
+          <Route
+            path="/active-plan/:planId/:status?"
+            element={<ActivePlan />}
+          />
+          {/* --------------Reports Module-2 -----------------*/}
+          <Route path="/reports" element={<Reports />} />
+          {/* -----------------mini-3-------------------- */}
+          <Route path="/login" element={<Login />}></Route>
+          <Route
+            path="/forgotPassword"
+            element={<ForgotPassword></ForgotPassword>}
+          ></Route>
+          <Route path="/active" element={<Active />}></Route>
+          <Route path="/viewAccounts" element={<ViewAccounts />}></Route>
+          <Route
+            path="/updateAccount/:userId"
+            element={<UpdateAccount />}
+          ></Route>
+          <Route
+            path="/deleteAccount/:userId"
+            element={<DeleteAccount />}
+          ></Route>
+          <Route
+            path="/activeSwitch/:userId/:currentStatus"
+            element={<ActiveSwitch />}
+          ></Route>
+          {/* -----------------mini-ApReg-------------------- */}\
+          <Route
+            path="/createApplication"
+            element={<CreateApplication />}
+          ></Route>
+          <Route
+            path="/viewApplication"
+            element={<ViewApplication></ViewApplication>}
+          ></Route>
+          <Route
+            path="/updateApplication/:appId"
+            element={<UpdateApplication></UpdateApplication>}
+          ></Route>
+          <Route
+            path="/deleteApplication/:appId"
+            element={<DeleteApplication></DeleteApplication>}
+          ></Route>
+        </Routes>
+      </BrowserRouter>
+    </>
   );
 };
-
 export default App;

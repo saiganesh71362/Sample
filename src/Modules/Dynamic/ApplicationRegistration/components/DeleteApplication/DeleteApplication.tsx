@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from "react";
 import NavbarMain from "../../../../Utils/NavbarMain/NavbarMain";
-import { UserManagementService } from "../../Services/UserManagmentService";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { ApplicationRegisterService } from "../../services/ApplicationRegisterService";
 
 interface IState {
   error: string;
 }
 
-const DeleteAccount: React.FC = () => {
+const DeleteApplication: React.FC = () => {
   const [state, setState] = useState<IState>({
     error: "",
   });
-  const { userId } = useParams();
-  const cid = Number(userId);
+  const { appId } = useParams();
+  const appid = Number(appId);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,7 +23,8 @@ const DeleteAccount: React.FC = () => {
     }));
 
     // Call the service to delete user
-    UserManagementService.deleteUserById(cid)
+    ApplicationRegisterService.deleteCitizen(appid)
+
       .then((response) => {
         console.log("Response from deleteUserById:", response);
         if (response.data) {
@@ -33,7 +34,7 @@ const DeleteAccount: React.FC = () => {
           }));
           // Redirect to viewAccounts page
           toast.error("Your Account Delete Success Fully");
-          navigate("/viewAccounts");
+          navigate("/viewApplication");
         }
       })
       .catch((error) => {
@@ -45,12 +46,13 @@ const DeleteAccount: React.FC = () => {
         }));
       });
   }, []);
+
   return (
     <>
       <NavbarMain />
-      <pre>{JSON.stringify(cid)}</pre>
+      <pre>{JSON.stringify(appid)}</pre>
     </>
   );
 };
 
-export default DeleteAccount;
+export default DeleteApplication;

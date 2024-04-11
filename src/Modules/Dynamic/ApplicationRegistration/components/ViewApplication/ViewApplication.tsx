@@ -1,31 +1,41 @@
 import React, { useEffect, useState } from "react";
-import NavbarMain from "../../../../Utils/NavbarMain/NavbarMain";
-import "./ViewAccounts.css";
-import { UserManagementService } from "../../Services/UserManagmentService";
-import { IUserMaster } from "../../Models/IUserMaster";
 import { Link } from "react-router-dom";
+import NavbarMain from "../../../../Utils/NavbarMain/NavbarMain";
+import { ApplicationRegisterService } from "../../services/ApplicationRegisterService";
+import { IApplicationRegisterEntity } from "../../models/IApplicationRegisterEntity";
+import { IApplicationRegister } from "../../models/IApplicationRegister";
+
 interface IState {
-  accountData: IUserMaster[];
+  applicationsData: IApplicationRegisterEntity[];
   error: string;
-  loading: boolean;
 }
 
-const ViewAccounts: React.FC = () => {
+const ViewApplication: React.FC = () => {
   const [state, setState] = useState<IState>({
-    accountData: [] as IUserMaster[],
+    applicationsData: [] as IApplicationRegisterEntity[],
     error: "",
-    loading: true,
   });
   useEffect(() => {
-    UserManagementService.getAllUsers()
+    ApplicationRegisterService.getAllApplicationRegisters()
       .then((response) => {
-        setState({ ...state, accountData: response.data });
+        // Cast each item to IApplicationRegisterEntity
+        const applicationsData: IApplicationRegisterEntity[] =
+          response.data.map((item: IApplicationRegister) => ({
+            ...item,
+            stateName: "", // Add default values for additional properties if needed
+            createdDate: "",
+            updatedDate: "",
+            createdBy: "",
+            updatedBy: "",
+          }));
+        setState({ ...state, applicationsData });
       })
       .catch((error) => {
+        setState({ ...state, error: "Error fetching data" });
         console.log("Error fetching data", error);
       });
   }, []);
-  const { accountData } = state;
+  const { applicationsData } = state;
   return (
     <>
       <div id="Body">
@@ -37,9 +47,9 @@ const ViewAccounts: React.FC = () => {
         >
           <div className="row mt-5">
             <div className="col-sm-12">
-              <div className="card text-light shadow-lg" id="ViewAc-Header">
+              <div className="card text-light shadow-lg" id="CreateAp_Head">
                 <div className="card-body text-center">
-                  <h2>VIEW ACCOUNTS</h2>
+                  <h2>VIEW APPLICATIONS</h2>
                 </div>
               </div>
             </div>
@@ -58,22 +68,21 @@ const ViewAccounts: React.FC = () => {
                     <th>Gender</th>
                     <th>Edit</th>
                     <th>Delete</th>
-                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {accountData.map((data, index) => (
+                  {applicationsData.map((data, index) => (
                     <tr key={index}>
-                      <td>{data.userId}</td>
+                      <td>{data.appId}</td>
                       <td>{data.fullName}</td>
                       <td>{data.email}</td>
-                      <td>{data.mobileNumber}</td>
+                      <td>{data.phNo}</td>
                       <td>{data.ssn}</td>
-                      <td>{data.dateOfBirth}</td>
+                      <td>{data.dob}</td>
                       <td>{data.gender}</td>
                       <td>
                         <Link
-                          to={`/updateAccount/${data.userId}`}
+                          to={`/updateApplication/${data.appId}`}
                           className="btn btn-primary"
                         >
                           <i className="bi bi-pencil-square"></i>
@@ -81,38 +90,11 @@ const ViewAccounts: React.FC = () => {
                       </td>
                       <td>
                         <Link
-                          to={`/deleteAccount/${data.userId}`}
+                          to={`/deleteApplication/${data.appId}`}
                           className="btn btn-danger"
                         >
                           <i className="bi bi-trash3-fill"></i>
                         </Link>
-                      </td>
-                      <td>
-                        {data.accountStatus == null && (
-                          <Link
-                            to={`/activeSwitch/${data.userId}/${data.accountStatus}`}
-                            className="btn btn-secondary"
-                          >
-                            <i className="bi bi-circle"></i>
-                          </Link>
-                        )}
-
-                        {data.accountStatus == "Active" && (
-                          <Link
-                            to={`/activeSwitch/${data.userId}/${data.accountStatus}`}
-                            className="btn btn-danger"
-                          >
-                            <i className="bi bi-check-circle"></i>
-                          </Link>
-                        )}
-                        {data.accountStatus == "In-Active" && (
-                          <Link
-                            to={`/activeSwitch/${data.userId}/${data.accountStatus}`}
-                            className="btn btn-success"
-                          >
-                            <i className="bi bi-x-circle-fill"></i>
-                          </Link>
-                        )}
                       </td>
                     </tr>
                   ))}
@@ -122,10 +104,11 @@ const ViewAccounts: React.FC = () => {
           </div>
           <div>
             <Link
-              to="/dashboard"
+              to="/createApplication"
               className="btn btn-info mt-4 text-dark fw-bold"
             >
-              <i className="bi bi-arrow-left-square"></i> DashBoard
+              <i className="bi bi-arrow-left-square"></i>
+              {"  "}CreateApplication
             </Link>
           </div>
         </div>
@@ -134,4 +117,4 @@ const ViewAccounts: React.FC = () => {
   );
 };
 
-export default ViewAccounts;
+export default ViewApplication;

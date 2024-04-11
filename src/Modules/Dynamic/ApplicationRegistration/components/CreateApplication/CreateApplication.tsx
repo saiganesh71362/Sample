@@ -1,178 +1,175 @@
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import React, { useState } from "react";
 import NavbarMain from "../../../../Utils/NavbarMain/NavbarMain";
-import "./UpdateAccount.css";
-import { UserManagementService } from "../../Services/UserManagmentService";
-import { IUser } from "../../Models/IUsers";
+import "./CreateApplication.css";
+import { Link, useNavigate } from "react-router-dom";
+import { IApplicationRegister } from "../../models/IApplicationRegister";
+import { ApplicationRegisterService } from "../../services/ApplicationRegisterService";
 import { toast } from "react-toastify";
-// topup
-
-const UpdateAccount: React.FC = () => {
-  const { userId } = useParams();
-  const id = Number(userId);
-  const navigate = useNavigate();
-
-  const [user, setUser] = useState<IUser>({
-    email: "",
-    mobileNumber: 0,
-    gender: "",
-    dateOfBirth: "",
-    ssn: 0,
-    createdBy: "",
-    updatedBy: "",
+const CreateApplication: React.FC = () => {
+  const [application, setApplication] = useState<IApplicationRegister>({
     fullName: "",
-    accStatus: "",
+    email: "",
+    phNo: 0,
+    ssn: 0,
+    dob: "",
+    gender: "",
+    appId: 0,
   });
-
-  useEffect(() => {
-    // stored the data page reload time
-    UserManagementService.getUserById(id)
-      .then((response) => {
-        setUser(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [id]);
 
   const updateInput = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
-    setUser({ ...user, [e.target.name]: e.target.value });
+    setApplication({ ...application, [e.target.name]: e.target.value });
   };
 
+  const navigate = useNavigate();
   const onSubmitForm = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    UserManagementService.updateUser(id, user) // Pass userId and user data to updateUser function
+    ApplicationRegisterService.applicationRegister(application)
+
       .then((response) => {
-        if (response.data) {
-          toast.success("Account Updated Successfully");
-          navigate("/viewAccounts"); // Corrected navigation path
+        if (response && response.data) {
+          toast.success("Application Register Successfully");
+          navigate("/viewApplication");
         }
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => alert("Error Occurred" + error.message));
   };
 
   return (
     <>
       <div id="Body">
         <NavbarMain></NavbarMain>
-        <pre>{JSON.stringify(user)}</pre>
+        <pre>{JSON.stringify(application)}</pre>
         <div className="container">
           {/* header row-1 */}
           <div className="row mt-5">
             <div className="col-sm-2"> </div>
             <div className="col-sm-8">
               <div className="card">
-                <div className="card-header " id="Update-Header">
-                  <h1 className="text text-center text-white">
-                    Update Account
+                <div className="card-header  " id="CreateAp_Head">
+                  <h1 className="text text-center text-light">
+                    Create Application
                   </h1>
                 </div>
-                <div className="card-body bg-danger-subtle" id="Update-Body">
+                <div className="card-body " id="CreateAp_Head">
                   {/* ----------form start----------- */}
-                  <form onSubmit={onSubmitForm}>
+                  <form
+                    onSubmit={(e) => {
+                      onSubmitForm(e);
+                    }}
+                    className="Login-form"
+                  >
                     {/* --------------- form row-1 -------------*/}
                     <div className="row">
                       {/* column-1 */}
                       <div className="col-sm-6">
-                        <label className="form-label fw-bold">
+                        <label className="form-label fw-bold text text-light">
                           Full Name :
                         </label>
                         <input
+                          name="fullName"
+                          value={application.fullName}
+                          onChange={updateInput}
                           type="text"
                           className="form-control"
-                          name="fullName"
-                          value={user.fullName}
-                          onChange={updateInput}
                           required
                         />
                       </div>
                       {/* column-2 */}
-                      <div className="col-sm-6 fw-bold">
-                        <label className="form-label">Email :</label>
+                      <div className="col-sm-6">
+                        <label className="form-label fw-bold text text-light">
+                          Email :
+                        </label>
                         <input
+                          name="email"
+                          value={application.email}
+                          onChange={updateInput}
                           type="email"
                           className="form-control"
-                          name="email"
-                          value={user.email}
-                          onChange={updateInput}
                           required
                         />
                       </div>
                     </div>
                     {/* -------------------- form row-2----------------- */}
-                    <div className="row mt-3 fw-bold">
+                    <div className="row mt-3">
                       {/* column-1 */}
                       <div className="col-sm-6">
-                        <label className="form-label">Mobile Number :</label>
+                        <label className="form-label fw-bold text text-light">
+                          Mobile Number :
+                        </label>
                         <input
+                          name="phNo"
+                          value={application.phNo}
+                          onChange={updateInput}
                           type="text"
                           className="form-control"
-                          name="mobileNumber"
-                          value={user.mobileNumber}
-                          onChange={updateInput}
                           required
                         />
                       </div>
                       {/* column-2 */}
                       <div className="col-sm-6 fw-bold">
-                        <label className="form-label">Ssn :</label>
+                        <label className="form-label text text-light">
+                          ssn :
+                        </label>
                         <input
-                          type="text"
-                          className="form-control"
                           name="ssn"
-                          value={user.ssn}
+                          value={application.ssn}
                           onChange={updateInput}
-                          required
+                          type="number"
+                          className="form-control"
                         />
                       </div>
                     </div>
                     {/*------------------ form row-3------------------ */}
                     <div className="row mt-3 fw-bold">
                       {/* column-1 */}
-                      <div className="col-sm-6 fw-bold">
-                        <label className="form-label">Date Of Birth :</label>
+                      <div className="col-sm-6">
+                        <label className="form-label text text-light">
+                          Date Of Birth :
+                        </label>
                         <input
+                          name="dob"
+                          value={application.dob}
+                          onChange={updateInput}
                           type="date"
                           className="form-control"
-                          name="dateOfBirth"
-                          value={user.dateOfBirth}
-                          onChange={updateInput}
                           required
                         />
                       </div>
                       {/* column-2 */}
                       <div className="col-sm-6 fw-bold">
-                        <label className="form-label">Gender :</label>
+                        <label className="form-label text text-light">
+                          Gender :
+                        </label>
                         <div className="">
                           <div className="form-check-inline">
                             <input
+                              value={"Male"}
                               type="radio"
                               className="form-check-input"
                               name="gender"
-                              value="Male"
-                              checked={user.gender === "Male"}
                               onChange={updateInput}
                               required
                             />{" "}
-                            <label className="form-label fw-bold">Male</label>
+                            <label className="form-label fw-bold text text-light">
+                              Male
+                            </label>
                           </div>
-                          <div className="form-check-inline fw-bold">
+                          <div className="form-check-inline">
                             <input
+                              value={"Female"}
                               type="radio"
                               className="form-check-input"
                               name="gender"
-                              value="Female"
-                              checked={user.gender === "Female"}
                               onChange={updateInput}
                               required
                             />{" "}
-                            <label className="form-label fw-bold">Female</label>
+                            <label className="form-label fw-bold text text-light">
+                              Female
+                            </label>
                           </div>
                         </div>
                       </div>
@@ -180,17 +177,19 @@ const UpdateAccount: React.FC = () => {
                     {/* ---------------- form row-4------------ */}
                     <div className="row m-3">
                       <div className="col-sm-12 d-flex flex-row justify-content-between">
+                        {/* div-1 */}
                         <div className="">
-                          <input
+                          <button
                             type="submit"
-                            value={`Update`}
-                            className="btn btn-primary m-2 fw-bold"
-                          ></input>
-                          <Link
-                            className="btn btn-success m-2 fw-bold"
-                            to={"/viewAccounts"}
+                            className="btn btn-danger text-center fw-bold"
                           >
-                            ViewAccounts
+                            Submit
+                          </button>
+                          <Link
+                            className="ms-5 text text-light"
+                            to="/viewApplication"
+                          >
+                            ViewAc
                           </Link>
                         </div>
                       </div>
@@ -206,4 +205,4 @@ const UpdateAccount: React.FC = () => {
   );
 };
 
-export default UpdateAccount;
+export default CreateApplication;

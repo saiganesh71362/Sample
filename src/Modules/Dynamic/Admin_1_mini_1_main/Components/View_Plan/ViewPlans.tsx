@@ -4,6 +4,7 @@ import { IPlans } from "../../Models/IPlans";
 import { Link } from "react-router-dom";
 import { IPlanCategory } from "../../Models/IPlanCategory";
 import NavbarMain from "../../../../Utils/NavbarMain/NavbarMain";
+import "./ViewPlan.css";
 //info
 
 const ViewPlans: React.FC = () => {
@@ -29,117 +30,119 @@ const ViewPlans: React.FC = () => {
   }, []);
   return (
     <>
-      <NavbarMain></NavbarMain>
-
-      <div
-        className="container mt-5 "
-        style={{ maxHeight: "80vh", overflowY: "auto" }}
-      >
-        {/* information card   and row-1*/}
-        <div className="row mt-5">
-          <div className="col-sm-12">
-            <div className="card  text-dark shadow-lg" id="Report-Header">
-              <div className="card-body text-center fw-bold">
-                <h2>VIEW PLAN'S</h2>
+      <div id="Body">
+        <NavbarMain></NavbarMain>
+        <div
+          className="container mt-5 "
+          style={{ maxHeight: "80vh", overflowY: "auto" }}
+        >
+          {/* information card   and row-1*/}
+          <div className="row mt-5">
+            <div className="col-sm-12">
+              <div className="card  text-dark shadow-lg" id="Report-Header">
+                <div className="card-body text-center fw-bold">
+                  <h2>VIEW PLAN'S</h2>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        {/* row-2   table information */}
-        <div className="row mt-5">
-          <div className="col-sm-12">
-            <table className="table table-striped table-hover">
-              {/* table head */}
-              <thead className="table table-warning">
-                <tr>
-                  <th>S.No</th>
-                  <th>Plan Name</th>
-                  <th>Plan Start Date</th>
-                  <th>Plan End Date</th>
-                  <th>Plan Category</th>
-                  <th>Edit</th>
-                  <th>Delete</th>
-                  <th>Action</th> {/* Corrected: Added Action column header */}
-                </tr>
-              </thead>
-              {/* table body */}
-              <tbody className="" id="Report-Header">
-                {plansData &&
-                  plansData.map((plan, index) => {
-                    return (
-                      <tr key={index}>
-                        <td>{plan.planId}</td>
-                        <td>{plan.planName}</td>
-                        <td>{plan.planStartDate}</td>
-                        <td>{plan.planEndDate}</td>
-                        <td>
-                          {cat.map((value) => {
-                            if (value.categoryId == plan.planCatagiryId) {
-                              return value.categoryName;
-                            }
-                          })}
-                        </td>
-                        <td>
-                          <Link
-                            to={`/update-plan/${plan.planId}`}
-                            className="btn btn-primary"
-                          >
-                            <i className="bi bi-pencil-square"></i>
-                          </Link>
-                        </td>
-                        <td>
-                          <Link
-                            to={`/delete-plan/${plan.planId}`}
-                            className="btn btn-danger"
-                          >
-                            <i className="bi bi-trash3-fill"></i>
-                          </Link>
-                        </td>
-                        <td>
-                          {plan.activeSwitch == null && (
+          {/* row-2   table information */}
+          <div className="row mt-5">
+            <div className="col-sm-12">
+              <table className="table table-striped table-hover">
+                {/* table head */}
+                <thead className="table table-warning">
+                  <tr>
+                    <th>S.No</th>
+                    <th>Plan Name</th>
+                    <th>Plan Start Date</th>
+                    <th>Plan End Date</th>
+                    <th>Plan Category</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                    <th>Action</th>{" "}
+                    {/* Corrected: Added Action column header */}
+                  </tr>
+                </thead>
+                {/* table body */}
+                <tbody className="" id="Report-Header">
+                  {plansData &&
+                    plansData.map((plan, index) => {
+                      return (
+                        <tr key={index}>
+                          <td>{plan.planId}</td>
+                          <td>{plan.planName}</td>
+                          <td>{plan.planStartDate}</td>
+                          <td>{plan.planEndDate}</td>
+                          <td>
+                            {cat.map((value) => {
+                              if (value.categoryId == plan.planCatagiryId) {
+                                return value.categoryName;
+                              }
+                            })}
+                          </td>
+                          <td>
                             <Link
-                              to={`/active-plan/${plan.planId}/${plan.activeSwitch}`}
-                              className="btn btn-secondary"
+                              to={`/update-plan/${plan.planId}`}
+                              className="btn btn-primary"
                             >
-                              <i className="bi bi-circle">
-                                {/* <pre>{JSON.stringify(plan.activeSwitch)}</pre> */}
-                              </i>
+                              <i className="bi bi-pencil-square"></i>
                             </Link>
-                          )}
-
-                          {plan.activeSwitch == "Y" && (
+                          </td>
+                          <td>
                             <Link
-                              to={`/active-plan/${plan.planId}/${plan.activeSwitch}`}
+                              to={`/delete-plan/${plan.planId}`}
                               className="btn btn-danger"
                             >
-                              <i className="bi bi-check-circle"></i>
+                              <i className="bi bi-trash3-fill"></i>
                             </Link>
-                          )}
-                          {plan.activeSwitch == "N" && (
-                            <Link
-                              to={`/active-plan/${plan.planId}/${plan.activeSwitch}`}
-                              className="btn btn-success"
-                            >
-                              <i className="bi bi-x-circle-fill"></i>
-                            </Link>
-                          )}
-                        </td>
-                      </tr>
-                    );
-                  })}
-              </tbody>
-            </table>
+                          </td>
+                          <td>
+                            {plan.activeSwitch == null && (
+                              <Link
+                                to={`/active-plan/${plan.planId}/${plan.activeSwitch}`}
+                                className="btn btn-secondary"
+                              >
+                                <i className="bi bi-circle">
+                                  {/* <pre>{JSON.stringify(plan.activeSwitch)}</pre> */}
+                                </i>
+                              </Link>
+                            )}
+
+                            {plan.activeSwitch == "Y" && (
+                              <Link
+                                to={`/active-plan/${plan.planId}/${plan.activeSwitch}`}
+                                className="btn btn-danger"
+                              >
+                                <i className="bi bi-check-circle"></i>
+                              </Link>
+                            )}
+                            {plan.activeSwitch == "N" && (
+                              <Link
+                                to={`/active-plan/${plan.planId}/${plan.activeSwitch}`}
+                                className="btn btn-success"
+                              >
+                                <i className="bi bi-x-circle-fill"></i>
+                              </Link>
+                            )}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
-        {/* back-button */}
-        <div>
-          <a
-            href="/create-plan"
-            className="btn btn-warning mt-4 text-dark fw-bold"
-          >
-            {/* Avoid using empty href */}
-            <i className="bi bi-arrow-left-square"></i> CreatePlan
-          </a>
+          {/* back-button */}
+          <div>
+            <a
+              href="/create-plan"
+              className="btn btn-warning mt-4 text-dark fw-bold"
+            >
+              {/* Avoid using empty href */}
+              <i className="bi bi-arrow-left-square"></i> CreatePlan
+            </a>
+          </div>
         </div>
       </div>
     </>
