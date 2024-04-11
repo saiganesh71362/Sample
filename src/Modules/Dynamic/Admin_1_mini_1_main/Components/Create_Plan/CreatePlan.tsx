@@ -64,133 +64,134 @@ const CreatePlan: React.FC = () => {
   };
   return (
     <>
-      <NavbarMain></NavbarMain>
-
-      <div className="container mt-5">
-        <div className="row mt-5">
-          <div className="col-sm-12  ">
-            <div className="card text-dark shadow-lg" id="Report-Header">
-              <div className="card-body text-center " id="Create-Body">
-                <h2 className=" fw-bold">CREATE PLAN</h2>
+      <div id="Body">
+        <NavbarMain></NavbarMain>
+        <div className="container mt-5">
+          <div className="row mt-5">
+            <div className="col-sm-12  ">
+              <div className="card text-dark shadow-lg" id="Report-Header">
+                <div className="card-body text-center " id="Create-Body">
+                  <h2 className=" fw-bold">CREATE PLAN</h2>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="row mt-5">
-          <div className="col-sm-12">
-            <div className="card" id="Report-Header">
-              <div className="card-body" id="Create-Card">
-                <form onSubmit={onSubmitForm}>
-                  {" "}
-                  {/* -----------row-1------------ */}
-                  <div className="row">
-                    {/* col-1 */}
-                    <div className="col-sm-6">
-                      <label
-                        htmlFor="PlanName"
-                        className="mb-3 form-label fw-bold"
-                      >
-                        PlanName :
-                      </label>
-                      <input
-                        name="planName"
-                        value={plan.planName}
-                        onChange={updateInput}
-                        type="text"
-                        placeholder="ENTER YOUR PLAN NAME "
-                        className="form-control"
-                      />
+          <div className="row mt-5">
+            <div className="col-sm-12">
+              <div className="card" id="Report-Header">
+                <div className="card-body" id="Create-Card">
+                  <form onSubmit={onSubmitForm}>
+                    {" "}
+                    {/* -----------row-1------------ */}
+                    <div className="row">
+                      {/* col-1 */}
+                      <div className="col-sm-6">
+                        <label
+                          htmlFor="PlanName"
+                          className="mb-3 form-label fw-bold"
+                        >
+                          PlanName :
+                        </label>
+                        <input
+                          name="planName"
+                          value={plan.planName}
+                          onChange={updateInput}
+                          type="text"
+                          placeholder="ENTER YOUR PLAN NAME "
+                          className="form-control"
+                        />
+                      </div>
+                      {/* col-2 */}
+                      <div className="col-sm-6 fw-bold">
+                        <label
+                          htmlFor="PlanStartDate :"
+                          className="mb-3 form-label fw-bold"
+                        >
+                          PlanStartDate
+                        </label>
+                        <input
+                          name="planStartDate"
+                          value={plan.planStartDate}
+                          onChange={updateInput}
+                          type="date"
+                          placeholder=" "
+                          className="form-control"
+                        />
+                      </div>
                     </div>
-                    {/* col-2 */}
-                    <div className="col-sm-6 fw-bold">
-                      <label
-                        htmlFor="PlanStartDate :"
-                        className="mb-3 form-label fw-bold"
-                      >
-                        PlanStartDate
-                      </label>
-                      <input
-                        name="planStartDate"
-                        value={plan.planStartDate}
-                        onChange={updateInput}
-                        type="date"
-                        placeholder=" "
-                        className="form-control"
-                      />
-                    </div>
-                  </div>
-                  {/* ---------row-2 ---------*/}
-                  <div className="row">
-                    {/* col-1 */}
-                    <div className="col-sm-6">
-                      <label
-                        htmlFor="PlanEndDate :"
-                        className="mt-3 form-label fw-bold"
-                      >
-                        PlanEndDate
-                      </label>
-                      <input
-                        name="planEndDate"
-                        value={plan.planEndDate}
-                        onChange={updateInput}
-                        type="date"
-                        placeholder=""
-                        className="form-control"
-                      />
-                    </div>
-                    {/* col-2 */}
-                    <div className="col-sm-6" key="categorySelect">
-                      <label
-                        htmlFor="Categories :"
-                        className="mt-3 form-label fw-bold"
-                      >
-                        PlanCategories
-                      </label>
-                      <select
-                        className="form-select text-info fw-bold"
-                        name="categoryId"
-                        onChange={updateInput}
-                      >
-                        <option selected className="text text-info fw-bold">
-                          {" "}
-                          Select a category{" "}
-                        </option>
-                        {categoryData.map((item, index) => (
-                          <option
-                            className="text text-info fw-bold"
-                            key={index}
-                            value={item.categoryId}
-                          >
-                            {item.categoryName}
+                    {/* ---------row-2 ---------*/}
+                    <div className="row">
+                      {/* col-1 */}
+                      <div className="col-sm-6">
+                        <label
+                          htmlFor="PlanEndDate :"
+                          className="mt-3 form-label fw-bold"
+                        >
+                          PlanEndDate
+                        </label>
+                        <input
+                          name="planEndDate"
+                          value={plan.planEndDate}
+                          onChange={updateInput}
+                          type="date"
+                          placeholder=""
+                          className="form-control"
+                        />
+                      </div>
+                      {/* col-2 */}
+                      <div className="col-sm-6" key="categorySelect">
+                        <label
+                          htmlFor="Categories :"
+                          className="mt-3 form-label fw-bold"
+                        >
+                          PlanCategories
+                        </label>
+                        <select
+                          className="form-select text-info fw-bold"
+                          name="categoryId"
+                          onChange={updateInput}
+                        >
+                          <option selected className="text text-info fw-bold">
+                            {" "}
+                            Select a category{" "}
                           </option>
-                        ))}
-                      </select>
+                          {categoryData.map((item, index) => (
+                            <option
+                              className="text text-info fw-bold"
+                              key={index}
+                              value={item.categoryId}
+                            >
+                              {item.categoryName}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
                     </div>
-                  </div>
-                  {/*------------ row-3------------ */}
-                  <div className="fw-bold">
-                    <input
-                      type="submit"
-                      value="Submit"
-                      className="btn btn-primary mt-4 fw-bold"
-                    />
-                  </div>
-                </form>
+                    {/*------------ row-3------------ */}
+                    <div className="fw-bold">
+                      <input
+                        type="submit"
+                        value="Submit"
+                        className="btn btn-primary mt-4 fw-bold"
+                      />
+                    </div>
+                  </form>
+                </div>
               </div>
             </div>
           </div>
+          {/* back-button */}
+          <div>
+            <a
+              href="/dashboard"
+              className="btn btn-danger mt-4 text-white fw-bold"
+            >
+              <i className="bi bi-arrow-left-square fw-bold"></i> DashBoard
+            </a>
+          </div>
         </div>
-        {/* back-button */}
-        <div>
-          <a
-            href="/dashboard"
-            className="btn btn-danger mt-4 text-white fw-bold"
-          >
-            <i className="bi bi-arrow-left-square fw-bold"></i> DashBoard
-          </a>
-        </div>
+        {/* <pre>{JSON.stringify(categoryData)}</pre> */}
       </div>
-      {/* <pre>{JSON.stringify(categoryData)}</pre> */}
     </>
   );
 };
