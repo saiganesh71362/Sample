@@ -191,6 +191,13 @@ const CreateApplication: React.FC = () => {
                           >
                             ViewAc
                           </Link>
+                          <Link
+                            to="/dashboard"
+                            className="btn btn-danger mt-4 text-white fw-bold ms-4"
+                          >
+                            <i className="bi bi-arrow-left-square fw-bold"></i>{" "}
+                            DashBoard
+                          </Link>
                         </div>
                       </div>
                     </div>
